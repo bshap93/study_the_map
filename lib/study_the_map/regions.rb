@@ -7,15 +7,16 @@ class Region
   def initialize(region)
     doc = Nokogiri::XML(open("https://skimap.org/Regions/view/#{LookupIDS.find_region_id(region)}.xml"))
     self.region_id = doc.search("region").attr('id').text
-    puts "Ski Area ID: #{self.region_id}"
+    puts "Here are the ski resorts in #{region}:"
     self.ski_areas = doc.search("skiArea").collect do |ski_area|
-      "#{ski_area.text}, ID: #{ski_area['id']}"
+      "#{ski_area.text}"
     end
   end
 
-  def self.starts_with
+  def self.starts_with(letter)
     # regions that start with
-    self.class.regions_list # go from here
+    regions_starts_with_letter = self.regions_list.select {|region_name| region_name.start_with?(letter.upcase)}
+    regions_starts_with_letter.each.with_index(1) {|region_name, index| puts "#{index}. #{region_name}"}
   end
 
   def starts_with(letter)
@@ -35,5 +36,9 @@ class Region
       regions_list_array << region.text.strip
     end
     regions_list_array.uniq
+  end
+
+  def self.ski_area_list
+    LookupIDS.index.search("skiArea name").map {|ski_area| ski_area.text}
   end
 end

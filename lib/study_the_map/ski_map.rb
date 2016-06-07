@@ -9,6 +9,9 @@ class SkiMaps
     area_doc = Nokogiri::XML(open("https://skimap.org/SkiAreas/view/#{LookupIDS.find_ski_area_id(area_name)}.xml"))
     @area_info = area_doc
     puts "There are #{area_doc.search("skiMaps").attr('count')} maps for this ski area."
+    if area_doc.search("skiMaps").attr('count') == 0
+      StudyTheMap::CLI.new.call
+    end
     puts "Please wait while we fetch the maps' years..."
     puts ""
     self.list_map_years
