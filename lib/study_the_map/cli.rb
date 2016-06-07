@@ -8,14 +8,13 @@ class StudyTheMap::CLI
   end
 
   def get_map
-    puts """
-      1. Link to map jpg
-      2. Link to resort url
-    """
+    puts "Please enter the name of the ski area you would like the map for:"
+    resort_name = gets.strip
+    SkiMaps.new(resort_name)
   end
 
   def get_areas
-    puts "Select a region or Ski Resort to study associated ski trail maps!"
+    puts "Select a region (type 'region') or Ski Resort (type 'resort') to study associated ski trail maps!"
     puts '-----------------------------------------------------------------------'
     puts "Or check out the world map to find resorts and trails: (type 'world')"
     puts '-----------------------------------------------------------------------'
@@ -30,7 +29,9 @@ class StudyTheMap::CLI
       when "world"
         Launchy.open("http://openskimap.org/")
       when "resort"
-        get_map(resort)
+        get_map
+      else 
+        "Please enter 'region', 'resort', or 'world'"
       end
     end
   end

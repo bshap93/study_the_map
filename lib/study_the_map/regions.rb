@@ -13,6 +13,11 @@ class Region
     end
   end
 
+  def self.starts_with
+    # regions that start with
+    self.class.regions_list # go from here
+  end
+
   def starts_with(letter)
     results = self.ski_areas.select do |area| 
       area.start_with?("#{letter}", "#{letter.upcase}")
@@ -22,5 +27,13 @@ class Region
 
   def full_list
     self.ski_areas.each.with_index(1){|area, i| puts "#{i}. #{area}"}
+  end
+
+  def self.regions_list
+    regions_list_array = []
+    LookupIDS.index.css("regions region").each do |region|
+      regions_list_array << region.text.strip
+    end
+    regions_list_array.uniq
   end
 end
