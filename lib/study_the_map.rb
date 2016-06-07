@@ -1,5 +1,6 @@
 require "bundler/setup"
 require "launchy"
+require "rake"
 require "./lib/study_the_map/version.rb"
 require_relative './study_the_map/cli'
 require './lib/study_the_map/lookupids.rb'
