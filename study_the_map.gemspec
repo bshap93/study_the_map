@@ -34,4 +34,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "nokogiri"
   spec.add_dependency "launchy"
+  spec.add_dependency "rake"
 end
