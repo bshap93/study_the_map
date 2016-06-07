@@ -8,21 +8,25 @@ class SkiMaps
     @area_name = area_name
     area_doc = Nokogiri::XML(open("https://skimap.org/SkiAreas/view/#{LookupIDS.find_ski_area_id(area_name)}.xml"))
     @area_info = area_doc
-    puts "There are #{area_doc.search("skiMaps").attr('count')} maps for this ski area."
-    if area_doc.search("skiMaps").attr('count') == 0
+    map_count = area_doc.search("skiMaps").attr('count').text
+    puts "There are #{map_count} maps for this ski area."
+    if map_count == "0"
       StudyTheMap::CLI.new.call
-    end
-    puts "Please wait while we fetch the maps' years..."
-    puts ""
-    self.list_map_years
-    map_years = self.get_map_years
-    input = nil
-    until map_years.include?(input)
+    elsif map_count == "1"
+      self.pick_map(self.get_map_years.join)
+    else
+      puts "Please wait while we fetch the maps' years..."
       puts ""
-      puts "Please pick a year that is listed."
-      input = gets.strip
+      self.list_map_years
+      map_years = self.get_map_years
+      input = nil
+      until map_years.include?(input)
+        puts ""
+        puts "Please pick a year that is listed."
+        input = gets.strip
+      end
+      self.pick_map(input)
     end
-    self.pick_map(input)
   end
 
   def get_map_ids
@@ -68,11 +72,12 @@ class SkiMaps
     puts "Type 'browser', 'download', or 'exit'"
     input = gets.strip
     case input 
-    when "download"
+    when "download"  
       exec "curl -O #{url}"
+      puts "Enjoy your map!"
     when "browser"
       Launchy.open("#{url}")
+      puts "Enjoy your map!"
     end
-    puts "Enjoy your map!"
   end
 end

@@ -8,9 +8,12 @@ class StudyTheMap::CLI
   end
 
   def get_map
+    resort_name = nil
     while resort_name != 'back'
       puts "1. Please enter the name of the ski area you would like the map for:"
+      puts '-----------------------------------------------------------------------'
       puts "2. Or type 'back' to go back to the main menu."
+      puts '-->'
       resort_name = gets.strip
       if resort_name == 'back'
         get_areas
@@ -25,11 +28,11 @@ class StudyTheMap::CLI
   def get_areas
     input = nil
     while input != 'exit'
-      puts "Select a region (type 'region') or Ski Resort (type 'resort') to study associated ski trail maps!"
+      puts "1. Select a region (type 'region') or Ski Resort (type 'resort') to study associated ski trail maps!"
       puts '-----------------------------------------------------------------------'
-      puts "Or check out the world map to find resorts and trails: (type 'world')"
+      puts "2. Or check out the world map to find resorts and trails: (type 'world')"
       puts '-----------------------------------------------------------------------'
-      puts "Enter the area you would like to search:"
+      puts "3. Enter the area you would like to search:"
       puts '-->'
       input = gets.strip.downcase
       case input
@@ -40,7 +43,8 @@ class StudyTheMap::CLI
       when "resort"
         get_map
       else 
-        "Please enter 'region', 'resort', or 'world'"
+        puts "Please enter 'region', 'resort', or 'world'"
+        puts '-----------------------------------------------------------------------'
       end
     end
   end
@@ -50,8 +54,11 @@ class StudyTheMap::CLI
     while region != "back"
       puts "-----------------------------------------------------------------------"
       puts "1. Input a region for a list of ski resorts, or"
+      puts '-----------------------------------------------------------------------'
       puts "2. Request a list of regions by typing the letter the region you're looking for starts with,"
+      puts '-----------------------------------------------------------------------'
       puts "3. Or 'back' to return to the main menu."
+      puts '-->'
       region = gets.strip
       if region.size == 1
         Region.starts_with(region)
@@ -62,7 +69,9 @@ class StudyTheMap::CLI
           region_object.full_list
         rescue Exception
           if region != "back"
+            puts '-----------------------------------------------------------------------'
             puts "Not a valid region."
+            puts '-----------------------------------------------------------------------'
           end
           region
         end
