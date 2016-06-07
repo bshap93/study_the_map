@@ -1,7 +1,5 @@
 # StudyTheMap
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/study_the_map`. To experiment with that code, run `bin/console` for an interactive prompt.
-
 This gem will gather skiing trail maps from skimap.org, allowing you to find and download maps from sites for resorts across the world.
 
 ## Installation
@@ -22,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Run ./bin/study_the_map to start!
+Run ./bin/study_the_map to start!
 
 ## Development
 
