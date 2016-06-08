@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-Run ./bin/study_the_map to start!
+Check that it installed using require 'study_the_map'. Then you can run the app from irb with StudyTheMap::CLI.new.call or ./bin/study_the_map if you've downloaded the repo.
 
 ## Development
 
