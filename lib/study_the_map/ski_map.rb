@@ -10,7 +10,14 @@ class SkiMaps
     area_doc = Nokogiri::XML(open("https://skimap.org/SkiAreas/view/#{LookupIDS.find_ski_area_id(area_name)}.xml"))
     
     @area_info = area_doc
-    map_count = area_doc.search("skiMaps").attr('count').text
+
+    map_count_and_pick
+
+  end
+
+  def map_count_and_pick
+
+    map_count = @area_info.search("skiMaps").attr('count').text
 
     puts "There are #{map_count} maps for this ski area."
 
@@ -38,9 +45,10 @@ class SkiMaps
         input = gets.strip
       end
 
-      self.pick_map(input)
+      pick_map(input)
 
     end
+
   end
 
   def get_map_ids
@@ -105,7 +113,7 @@ class SkiMaps
     input = gets.strip
 
     case input 
-      
+
     when "download"
 
       exec "curl -O #{url}"
