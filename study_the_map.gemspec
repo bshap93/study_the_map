@@ -9,7 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["bshap93"]
   spec.email         = ["benihana858@gmail.com"]
 
-  spec.summary       = "This gem will gather skiing trail maps from skimap.org, allowing you to find and download maps from sites for resorts across the world."
+  spec.summary       = "A Ski Map Fetcher"
+  spec.description   = "This gem will gather skiing trail maps from skimap.org, allowing you to find and download maps from sites for resorts across the world."
   spec.homepage      = "https://github.com/bshap93/study_the_map"
   spec.license       = "MIT"
 
@@ -21,8 +22,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.11"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "pry"
+  spec.add_development_dependency "pry", "~> 1.0"
 
-  spec.add_development_dependency "nokogiri"
-  spec.add_development_dependency "launchy"
+  spec.add_development_dependency "nokogiri", "~> 2.9.2"
+  spec.add_development_dependency "launchy", "~2.4.2"
 end
