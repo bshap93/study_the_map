@@ -14,6 +14,7 @@ class StudyTheMap::CLI
       puts '-----------------------------------------------------------------------'
       puts "2. Or type 'back' to go back to the main menu."
       puts '-->'
+
       resort_name = gets.strip
       if resort_name == 'back'
         get_areas
@@ -22,10 +23,12 @@ class StudyTheMap::CLI
       else
         puts "Invalid ski area name"
       end
+
     end
   end
 
   def get_areas
+    
     input = nil
     while input != 'exit'
       puts "1. Select a region (type 'region') or Ski Resort (type 'resort') to study associated ski trail maps!"
@@ -34,6 +37,7 @@ class StudyTheMap::CLI
       puts '-----------------------------------------------------------------------'
       puts "3. Enter the area you would like to search:"
       puts '-->'
+      
       input = gets.strip.downcase
       case input
       when "region"
@@ -47,6 +51,7 @@ class StudyTheMap::CLI
         puts '-----------------------------------------------------------------------'
       end
     end
+
   end
 
   def region
@@ -59,11 +64,14 @@ class StudyTheMap::CLI
       puts '-----------------------------------------------------------------------'
       puts "3. Or 'back' to return to the main menu."
       puts '-->'
+      
       region = gets.strip
+      
       if region.size == 1
         Region.starts_with(region)
         region
       else
+
         begin
           region_object = Region.new(region)
           region_object.full_list
@@ -75,7 +83,9 @@ class StudyTheMap::CLI
           end
           region
         end
+        
       end
+
     end
   end
 

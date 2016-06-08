@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["bshap93"]
   spec.email         = ["benihana858@gmail.com"]
 
-  spec.summary       = %q{This gem will gather skiing trail maps from skimap.org, allowing you to find and download maps from sites for resorts across the world.}
+  spec.summary       = "This gem will gather skiing trail maps from skimap.org, allowing you to find and download maps from sites for resorts across the world."
   spec.homepage      = "https://github.com/bshap93/study_the_map"
   spec.license       = "MIT"
 
