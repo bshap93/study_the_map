@@ -65,13 +65,9 @@ class SkiMaps
 
   def get_map_data
 
-    map_data_array = []
-
-    self.get_map_ids.each do |id|
-      map_data_array << Nokogiri::XML(open("https://skimap.org/SkiMaps/view/#{id}.xml"))
+    self.get_map_ids.collect do |id|
+      Nokogiri::XML(open("https://skimap.org/SkiMaps/view/#{id}.xml"))
     end
-
-    map_data_array
 
   end
 
@@ -85,13 +81,9 @@ class SkiMaps
 
   def get_map_years
 
-    map_years_array = []
-
-    self.get_map_data.each do |map|
-      map_years_array << map.search("yearPublished").text
+    self.get_map_data.collect do |map|
+      map.search("yearPublished").text
     end
-
-    map_years_array
 
   end
 
