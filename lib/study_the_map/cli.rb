@@ -1,5 +1,4 @@
 #CLI controller 
-require "./lib/study_the_map.rb"
 class StudyTheMap::CLI
 
   def call
@@ -7,6 +6,14 @@ class StudyTheMap::CLI
     get_areas
 
     goodbye
+
+  end
+
+  def list_map_years  
+
+    @skimaps.area_info.scrape_map_data.each do |map|
+      puts map.search("yearPublished").text
+    end
 
   end
 
@@ -28,7 +35,9 @@ class StudyTheMap::CLI
 
       elsif Region.ski_area_list.include?(resort_name)
 
-        SkiMaps.new(resort_name)
+        @skimaps = SkiMaps.new(resort_name)
+        self.map_count_and_pick(@skimaps.map_count)
+
 
       else
 
@@ -36,6 +45,75 @@ class StudyTheMap::CLI
       end
     end
   end
+
+  def map_count_and_pick(map_count)
+
+    puts "There are #{map_count} maps for this ski area."
+
+    if map_count == "0"
+
+      StudyTheMap::CLI.new.call
+
+    elsif map_count == "1"
+
+      self.pick_map(self.get_map_years.join)
+
+    else
+
+      puts "Please wait while we fetch the maps' years..."
+      puts ""
+
+      self.list_map_years
+      map_years = @skimaps.area_info.scrape_map_years
+
+      input = nil
+
+      until map_years.include?(input)
+        puts ""
+        puts "Please pick a year that is listed."
+        input = gets.strip
+      end
+
+      pick_map(input)
+
+    end
+
+  end
+
+  def pick_map(year)
+
+    map_data = @skimaps.area_info.scrape_map_data.detect do |map|
+      map.search("yearPublished").text == year
+    end
+
+    begin
+      url = map_data.search("render").attr('url').text
+    rescue Exception
+      url = map_data.search("unprocessed").attr('url').text
+    end
+
+    puts "Would you like to download the Map to your working directory or see it in your browser?"
+    puts "Type 'browser', 'download', or 'exit'"
+
+    input = gets.strip
+
+    case input 
+
+    when "download"
+
+      exec "curl -O #{url}"
+      puts "Enjoy your map!"
+
+    when "browser"
+
+      Launchy.open("#{url}")
+      puts "Enjoy your map!"
+
+    end
+
+  end
+
+
 
   def get_areas
     
@@ -74,8 +152,8 @@ class StudyTheMap::CLI
 
   def region
 
-    region = nil
-    while region != "back"
+    region_name = nil
+    while region_name != "back"
 
       puts "-----------------------------------------------------------------------"
       puts "1. Input a region for a list of ski resorts, or"
@@ -85,23 +163,27 @@ class StudyTheMap::CLI
       puts "3. Or 'back' to return to the main menu."
       puts '-->'
       
-      region = gets.strip
-      
-      if region.size == 1
+      region_name = gets.strip
 
-        Region.starts_with(region)
+      if region_name == "back"
+        call
+      end
+      
+      if region_name.size == 1
+
+        Region.starts_with(region_name)
         region
 
       else
 
         begin
 
-          region_object = Region.new(region)
+          region_object = Region.new(region_name)
           region_object.full_list
 
         rescue Exception
 
-          if region != "back"
+          if region_name != "back"
             puts '-----------------------------------------------------------------------'
             puts "Not a valid region."
             puts '-----------------------------------------------------------------------'
