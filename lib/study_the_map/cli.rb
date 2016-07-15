@@ -1,4 +1,10 @@
 #CLI controller 
+class App
+  def self.start
+    StudyTheMap::CLI.new.call
+  end
+end
+
 class StudyTheMap::CLI
 
   def call
@@ -33,7 +39,7 @@ class StudyTheMap::CLI
 
         get_areas
 
-      elsif Region.ski_area_list.include?(resort_name)
+      elsif RegionScraper.ski_area_list.include?(resort_name)
 
         @skimaps = SkiMaps.new(resort_name)
         self.map_count_and_pick(@skimaps.map_count)
