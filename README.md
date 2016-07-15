@@ -22,4 +22,4 @@ Or install it yourself as:
 
 ```require 'study_the_map'```
 
-```App.start```
+Type ```App.start```
