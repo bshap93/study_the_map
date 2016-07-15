@@ -20,6 +20,6 @@ Or install it yourself as:
 
 ## Usage
 
-```require 'study_the_map'```
+```require 'study_the_map'
 
-```App.start```
+App.start```
